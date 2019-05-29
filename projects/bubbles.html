@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+        <titles>Vanishing Bubbles</titles>
+    </head>
+
+  <link href="bubbles.css" rel="stylesheet" type="text/css" />
+
+    <body>
+        <a-scene>
+            <a-sky
+            color="cornflowerblue"
+            >
+            </a-sky>
+            
+            <a-camera>
+                <a-cursor fuse="true" fuse-timeout="1500"></a-cursor>
+            </a-camera>
+            
+            
+            <a-plane
+            position="0 0 0" color="darkolivegreen" width="100" height="100" rotation="-90 0 0"
+            >
+            </a-plane>
+            
+            <a-sphere
+            radius="1"
+            color="aquamarine"
+            position="-10 10 -3"
+            >
+            <a-animation
+            attribute="visible"
+            from="true"
+            to="false"
+            dur="1000"
+            begin="click"
+            >
+            </a-animation>
+            </a-sphere>
+            
+            
+            <a-sphere
+            radius="1"
+            color="darkseagreen"
+            position="2 7 -3"
+            >
+            <a-animation
+            attribute="visible"
+            from="true"
+            to="false"
+            dur="1000"
+            begin="click"
+            >
+            </a-animation>
+            </a-sphere>
+            
+            
+            <a-sphere
+            radius="1"
+            color="plum"
+            position="5 3 -3"
+            >
+            <a-animation
+            attribute="visible"
+            from="true"
+            to="false"
+            dur="1000"
+            begin="click"
+            >
+            </a-animation>
+            </a-sphere>
+            
+            
+        </a-scene>
+    </body>
+</html>

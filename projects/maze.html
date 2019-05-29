@@ -1,0 +1,399 @@
+<html>
+<head>
+<title>Maze</title>
+
+<link href="maze.css" rel="stylesheet" type="text/css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/a818e45667427600634e9e44b17902f1a5d48243/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+pre {
+    border: 1px solid black;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: #F5F5F5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>Maze</h1>
+
+
+
+<canvas
+width="400"
+height="500"
+class="codehs-editor-canvas"></canvas>
+<pre id="console"></pre>
+
+<script>
+window.onload = function() {
+
+    function start() {
+    drawMaze(0, 0);
+    drawPacman(getWidth()/2, getHeight()/2 + 160);
+    drawGhost(getWidth()/2, 140, Color.red);
+    drawGhost(getWidth()/2 - 25, 200, Color.cyan);
+    drawGhost(getWidth()/2, 200, "#FF69B4");
+    drawGhost(getWidth()/2 + 25, 200, Color.orange);
+    drawBox();
+    drawBorderTop();
+    drawBorderBottom();
+    drawSS1();
+    drawSS2();
+}
+
+function drawGhost(centerX, centerY, color){
+    var head = new Circle(30/3);
+    head.setPosition(centerX, centerY);
+    head.setColor(color);
+    add(head);
+    var body = new Rectangle(60/3, 60/3);
+    body.setPosition(centerX - 30/3, centerY);
+    body.setColor(color);
+    add(body);
+    var foot1 = new Circle(10/3);
+    foot1.setPosition(centerX -20/3, centerY + 60/3);
+    foot1.setColor(color);
+    add(foot1);
+    var foot2 = new Circle(10/3);
+    foot2.setPosition(centerX, centerY + 60/3);
+    foot2.setColor(color);
+    add(foot2);
+    var foot3 = new Circle(10/3);
+    foot3.setPosition(centerX + 20/3, centerY + 60/3);
+    foot3.setColor(color);
+    add(foot3);
+    var eye1 = new Circle(10/3);
+    eye1.setPosition(centerX -12/3, centerY + 5/3);
+    eye1.setColor(Color.white);
+    add(eye1);
+    var eye2 = new Circle(10/3);
+    eye2.setPosition(centerX + 12/3, centerY + 5/3);
+    eye2.setColor(Color.white);
+    add(eye2);
+    var pupil1 = new Circle(5/3);
+    pupil1.setPosition(centerX - 8/3, centerY + 5/3);
+    pupil1.setColor(Color.blue);
+    add(pupil1);
+    var pupil2 = new Circle(5/3);
+    pupil2.setPosition(centerX + 16/3, centerY + 5/3);
+    pupil2.setColor(Color.blue);
+    add(pupil2);
+}
+
+function drawPacman(centerX, centerY){
+    var body = new Arc(16, 30, 330, 0);
+    body.setPosition(centerX, centerY);
+    body.setColor(Color.yellow);
+    add(body);
+    var eye = new Circle(2);
+    eye.setPosition(centerX + 3, centerY - 12);
+    eye.setColor(Color.black);
+    add(eye);
+}
+
+function drawMaze(x, y){
+    var maze = new Rectangle(getWidth(), getHeight());
+    maze.setColor(Color.black);
+    add(maze);
+}
+
+function drawBox(x, y){
+    var l1 = new Line (getWidth()/2 - 40, 175, getWidth()/2 - 40, 230);
+    l1.setColor(Color.blue);
+    add(l1);
+    var l2 = new Line (getWidth()/2 + 40, 175, getWidth()/2 + 40, 230);
+    l2.setColor(Color.blue);
+    add(l2);
+    var open = new Line ((getWidth()/2) - 10, 173, (getWidth()/2) + 10, 173);
+    open.setLineWidth(7);
+    open.setColor(Color.white);
+    add(open);
+    var l3 = new Line (getWidth()/2 - 40, 175, getWidth()/2 - 12, 175);
+    l3.setColor(Color.blue);
+    add(l3);
+    var l4 = new Line (getWidth()/2 + 12, 175, getWidth()/2 + 40, 175);
+    l4.setColor(Color.blue);
+    add(l4);
+    var l5 = new Line (getWidth()/2 - 40, 230, getWidth()/2 + 40, 230);
+    l5.setColor(Color.blue);
+    add(l5);
+    var l6 = new Line (getWidth()/2 - 45, 170, getWidth()/2 - 45, 235);
+    l6.setColor(Color.blue);
+    add(l6);
+    var l7 = new Line (getWidth()/2 + 45, 170, getWidth()/2 + 45, 235);
+    l7.setColor(Color.blue);
+    add(l7);
+    var l8 = new Line (getWidth()/2 - 45, 235, getWidth()/2 + 45, 235);
+    l8.setColor(Color.blue);
+    add(l8);
+    var l9 = new Line (getWidth()/2 - 45, 170, getWidth()/2 - 12, 170);
+    l9.setColor(Color.blue);
+    add(l9);
+    var l9 = new Line (getWidth()/2 + 12, 170, getWidth()/2 + 45, 170);
+    l9.setColor(Color.blue);
+    add(l9);
+}
+
+function drawBorderTop(x, y){
+    var l1 = new Line (getWidth()/2 - 185, 5, getWidth()/2 + 185, 5);
+    l1.setColor(Color.blue);
+    add(l1);
+    var l2 = new Line (getWidth()/2 - 180, 10, getWidth()/2 - 3, 10);
+    l2.setColor(Color.blue);
+    add(l2);
+    var l3 = new Line (getWidth()/2 + 180, 10, getWidth()/2 + 3, 10);
+    l3.setColor(Color.blue);
+    add(l3);
+    var l4 = new Line (getWidth()/2 + 3, 10, getWidth()/2 + 3, 45);
+    l4.setColor(Color.blue);
+    add(l4);
+    var l5 = new Line (getWidth()/2 - 3, 10, getWidth()/2 - 3, 45);
+    l5.setColor(Color.blue);
+    add(l5);
+    var l6 = new Line (getWidth()/2 - 3, 45, getWidth()/2 + 3, 45);
+    l6.setColor(Color.blue);
+    add(l6);
+    var l7 = new Line (getWidth()/2 - 185, 5, getWidth()/2 - 185, 165);
+    l7.setColor(Color.blue);
+    add(l7);
+    var l8 = new Line (getWidth()/2 - 180, 10, getWidth()/2 - 180, 160);
+    l8.setColor(Color.blue);
+    add(l8);
+    var l9 = new Line (getWidth()/2 + 185, 5, getWidth()/2 + 185, 165);
+    l9.setColor(Color.blue);
+    add(l9);
+    var l10 = new Line (getWidth()/2 + 180, 10, getWidth()/2 + 180, 160);
+    l10.setColor(Color.blue);
+    add(l10);
+    var l11 = new Line (getWidth()/2 - 180, 160, getWidth()/2 - 105, 160);
+    l11.setColor(Color.blue);
+    add(l11);
+    var l12 = new Line (getWidth()/2 - 185, 165, getWidth()/2 - 110, 165);
+    l12.setColor(Color.blue);
+    add(l12);
+    var l13 = new Line (getWidth()/2 + 180, 160, getWidth()/2 + 105, 160);
+    l13.setColor(Color.blue);
+    add(l13);
+    var l14 = new Line (getWidth()/2 + 185, 165, getWidth()/2 + 110, 165);
+    l14.setColor(Color.blue);
+    add(l14);
+    var l15 = new Line (getWidth()/2 - 110, 165, getWidth()/2 - 110, 200);
+    l15.setColor(Color.blue);
+    add(l15);
+    var l16 = new Line (getWidth()/2 - 105, 160, getWidth()/2 - 105, 205);
+    l16.setColor(Color.blue);
+    add(l16);
+    var l17 = new Line (getWidth()/2 - 105, 205, 0, 205);
+    l17.setColor(Color.blue);
+    add(l17);
+    var l18 = new Line (getWidth()/2 - 110, 200, 0, 200);
+    l18.setColor(Color.blue);
+    add(l18);
+    var l19 = new Line (getWidth()/2 + 110, 165, getWidth()/2 + 110, 200);
+    l19.setColor(Color.blue);
+    add(l19);
+    var l20 = new Line (getWidth()/2 + 105, 160, getWidth()/2 + 105, 205);
+    l20.setColor(Color.blue);
+    add(l20);
+    var l21 = new Line (getWidth()/2 + 105, 205, 500, 205);
+    l21.setColor(Color.blue);
+    add(l21);
+    var l21 = new Line (getWidth()/2 + 110, 200, 500, 200);
+    l21.setColor(Color.blue);
+    add(l21);
+}
+
+function drawBorderBottom(x, y){
+    var l1 = new Line (getWidth()/2 - 185, 475, getWidth()/2 + 185, 475);
+    l1.setColor(Color.blue);
+    add(l1);
+    var l2 = new Line (getWidth()/2 - 180, 470, getWidth()/2 - 3, 470);
+    l2.setColor(Color.blue);
+    add(l2);
+    var l3 = new Line (getWidth()/2 + 180, 470, getWidth()/2 + 3, 470);
+    l3.setColor(Color.blue);
+    add(l3);
+    var l4 = new Line (getWidth()/2 + 3, 470, getWidth()/2 + 3, 435);
+    l4.setColor(Color.blue);
+    add(l4);
+    var l5 = new Line (getWidth()/2 - 3, 470, getWidth()/2 - 3, 435);
+    l5.setColor(Color.blue);
+    add(l5);
+    var l6 = new Line (getWidth()/2 - 3, 435, getWidth()/2 + 3, 435);
+    l6.setColor(Color.blue);
+    add(l6);
+    var l7 = new Line (getWidth()/2 - 185, 475, getWidth()/2 - 185, 305);
+    l7.setColor(Color.blue);
+    add(l7);
+    var l8 = new Line (getWidth()/2 - 180, 470, getWidth()/2 - 180, 310);
+    l8.setColor(Color.blue);
+    add(l8);
+    var l9 = new Line (getWidth()/2 + 185, 475, getWidth()/2 + 185, 305);
+    l9.setColor(Color.blue);
+    add(l9);
+    var l10 = new Line (getWidth()/2 + 180, 470, getWidth()/2 + 180, 310);
+    l10.setColor(Color.blue);
+    add(l10);
+    var l11 = new Line (getWidth()/2 - 180, 310, getWidth()/2 - 105, 310);
+    l11.setColor(Color.blue);
+    add(l11);
+    var l12 = new Line (getWidth()/2 - 185, 305, getWidth()/2 - 110, 305);
+    l12.setColor(Color.blue);
+    add(l12);
+    var l13 = new Line (getWidth()/2 + 180, 310, getWidth()/2 + 105, 310);
+    l13.setColor(Color.blue);
+    add(l13);
+    var l14 = new Line (getWidth()/2 + 185, 305, getWidth()/2 + 110, 305);
+    l14.setColor(Color.blue);
+    add(l14);
+    var l15 = new Line (getWidth()/2 - 110, 305, getWidth()/2 - 110, 270);
+    l15.setColor(Color.blue);
+    add(l15);
+    var l16 = new Line (getWidth()/2 - 105, 310, getWidth()/2 - 105, 265);
+    l16.setColor(Color.blue);
+    add(l16);
+    var l17 = new Line (getWidth()/2 - 105, 265, 0, 265);
+    l17.setColor(Color.blue);
+    add(l17);
+    var l18 = new Line (getWidth()/2 - 110, 270, 0, 270);
+    l18.setColor(Color.blue);
+    add(l18);
+    var l19 = new Line (getWidth()/2 + 110, 305, getWidth()/2 + 110, 270);
+    l19.setColor(Color.blue);
+    add(l19);
+    var l20 = new Line (getWidth()/2 + 105, 310, getWidth()/2 + 105, 265);
+    l20.setColor(Color.blue);
+    add(l20);
+    var l21 = new Line (getWidth()/2 + 105, 265, 500, 265);
+    l21.setColor(Color.blue);
+    add(l21);
+    var l21 = new Line (getWidth()/2 + 110, 270, 500, 270);
+    l21.setColor(Color.blue);
+    add(l21);
+}
+
+function drawSS1(x, y){
+    var l1 = new Line (getWidth()/2 - 45, 375, getWidth()/2 + 45, 375);
+    l1.setColor(Color.blue);
+    add(l1);
+    var l2 = new Line (getWidth()/2 - 45, 375, getWidth()/2 - 45, 370);
+    l2.setColor(Color.blue);
+    add(l2);
+    var l3 = new Line (getWidth()/2 + 45, 375, getWidth()/2 + 45, 370);
+    l3.setColor(Color.blue);
+    add(l3);
+    var l4 = new Line (getWidth()/2 - 45, 370, getWidth()/2 - 3, 370);
+    l4.setColor(Color.blue);
+    add(l4);
+    var l5 = new Line (getWidth()/2 + 45, 370, getWidth()/2 + 3, 370);
+    l5.setColor(Color.blue);
+    add(l5);
+    var l6 = new Line (getWidth()/2 - 3, 370, getWidth()/2 - 3, 340);
+    l6.setColor(Color.blue);
+    add(l6);
+    var l7 = new Line (getWidth()/2 + 3, 370, getWidth()/2 + 3, 340);
+    l7.setColor(Color.blue);
+    add(l7);
+    var l8 = new Line (getWidth()/2 - 3, 340, getWidth()/2 + 3, 340);
+    l8.setColor(Color.blue);
+    add(l8);
+}
+
+function drawSS2(x, y){
+    var l1 = new Line (getWidth()/2 - 45, 75, getWidth()/2 + 45, 75);
+    l1.setColor(Color.blue);
+    add(l1);
+    var l2 = new Line (getWidth()/2 - 45, 75, getWidth()/2 - 45, 80);
+    l2.setColor(Color.blue);
+    add(l2);
+    var l3 = new Line (getWidth()/2 + 45, 75, getWidth()/2 + 45, 80);
+    l3.setColor(Color.blue);
+    add(l3);
+    var l4 = new Line (getWidth()/2 - 45, 80, getWidth()/2 - 3, 80);
+    l4.setColor(Color.blue);
+    add(l4);
+    var l5 = new Line (getWidth()/2 + 45, 80, getWidth()/2 + 3, 80);
+    l5.setColor(Color.blue);
+    add(l5);
+    var l6 = new Line (getWidth()/2 - 3, 80, getWidth()/2 - 3, 110);
+    l6.setColor(Color.blue);
+    add(l6);
+    var l7 = new Line (getWidth()/2 + 3, 80, getWidth()/2 + 3, 110);
+    l7.setColor(Color.blue);
+    add(l7);
+    var l8 = new Line (getWidth()/2 - 3, 110, getWidth()/2 + 3, 110);
+    l8.setColor(Color.blue);
+    add(l8);
+    var l9 = new Line (getWidth()/2 - 80, 80, getWidth()/2 - 75, 80);
+    l9.setColor(Color.blue);
+    add(l9);
+    var l10 = new Line (getWidth()/2 - 80, 170, getWidth()/2 - 75, 170);
+    l10.setColor(Color.blue);
+    add(l10);
+    var l11 = new Line (getWidth()/2 - 80, 80, getWidth()/2 - 80, 170);
+    l11.setColor(Color.blue);
+    add(l11);
+    var l12 = new Line (getWidth()/2 - 75, 80, getWidth()/2 - 75, 123);
+    l12.setColor(Color.blue);
+    add(l12);
+    var l13 = new Line (getWidth()/2 - 75, 170, getWidth()/2 - 75, 130);
+    l13.setColor(Color.blue);
+    add(l13);
+    var l14 = new Line (getWidth()/2 - 75, 123, getWidth()/2 - 55, 123);
+    l14.setColor(Color.blue);
+    add(l14);
+    var l15 = new Line (getWidth()/2 - 75, 130, getWidth()/2 - 55, 130);
+    l15.setColor(Color.blue);
+    add(l15);
+    var l16 = new Line (getWidth()/2 - 55, 130, getWidth()/2 - 55, 123);
+    l16.setColor(Color.blue);
+    add(l16);
+    var l17 = new Line (getWidth()/2 + 80, 80, getWidth()/2 + 75, 80);
+    l17.setColor(Color.blue);
+    add(l17);
+    var l18 = new Line (getWidth()/2 + 80, 170, getWidth()/2 + 75, 170);
+    l18.setColor(Color.blue);
+    add(l18);
+    var l19 = new Line (getWidth()/2 + 80, 80, getWidth()/2 + 80, 170);
+    l19.setColor(Color.blue);
+    add(l19);
+    var l20 = new Line (getWidth()/2 + 75, 80, getWidth()/2 + 75, 123);
+    l20.setColor(Color.blue);
+    add(l20);
+    var l21 = new Line (getWidth()/2 + 75, 170, getWidth()/2 + 75, 130);
+    l21.setColor(Color.blue);
+    add(l21);
+    var l22 = new Line (getWidth()/2 + 75, 123, getWidth()/2 + 55, 123);
+    l22.setColor(Color.blue);
+    add(l22);
+    var l23 = new Line (getWidth()/2 + 75, 130, getWidth()/2 + 55, 130);
+    l23.setColor(Color.blue);
+    add(l23);
+    var l24 = new Line (getWidth()/2 + 55, 130, getWidth()/2 + 55, 123);
+    l24.setColor(Color.blue);
+    add(l24);  
+}
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>

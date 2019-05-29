@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+        <title>Flung into Space</title>
+    </head>
+
+    <link href="speed.css" rel="stylesheet" type="text/css" />
+
+    <body>
+        <a-scene>
+            <!-- Set the sky -->
+            <a-sky
+            color="black">
+                
+            </a-sky>
+            
+            <!-- Stars -->
+            <a-sphere radius="0.5" position="-7 10 -50" color="white">
+                <a-animation
+                attribute="position"
+                from="-7 10 -50"
+                to="-9 22 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+            
+            <a-sphere radius="0.5" position="-4 5 -80" color="white">
+                <a-animation
+                attribute="position"
+                from="-4 5 -80"
+                to="-8 15 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+
+            <a-sphere radius="0.5" position="7 20 -10" color="white">
+                <a-animation
+                attribute="position"
+                from="7 20 -10"
+                to="3 30 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+
+            <a-sphere radius="0.5" position="2 8 -40" color="white">
+                <a-animation
+                attribute="position"
+                from="2 8 -40"
+                to="5 16 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+
+            <a-sphere radius="0.5" position="-12 19 -25" color="white">
+                <a-animation
+                attribute="position"
+                from="-12 19 -25"
+                to="-8 24 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+
+            <a-sphere radius="0.5" position="-5 20 -60" color="white">
+                <a-animation
+                attribute="position"
+                from="-5 20 -60"
+                to="7 26 10"
+                dur="2000"
+                ></a-animation>
+            </a-sphere>
+            
+        </a-scene>
+    </body>
+</html>
